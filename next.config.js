@@ -20,7 +20,8 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
-  // Remove output: 'export' to enable ISR
+  output: 'export',
+  assetPrefix: '.',
   eslint: {
     ignoreDuringBuilds: true,
   },
