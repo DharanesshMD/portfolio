@@ -15,10 +15,11 @@ async function getBlog(slug) {
 
 // Generate static paths for each blog post
 export async function generateStaticParams() {
+  // Fetch all articles to get their slugs
   const response = await fetch(`https://dev.to/api/articles/${personalData.devUsername}`);
   const articles = await response.json();
 
-  // Ensure the articles array is valid
+  // Check if articles is an array
   if (!Array.isArray(articles)) {
     throw new Error('Failed to fetch articles');
   }
