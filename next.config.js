@@ -22,6 +22,7 @@ const nextConfig = {
   },
   output: 'export',
   assetPrefix: '.',
+  basePATH:'https://',
   eslint: {
     ignoreDuringBuilds: true,
   },
