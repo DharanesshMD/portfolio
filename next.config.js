@@ -21,7 +21,7 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'export',
-  assetPrefix: '.',
+  // assetPrefix: '.',
   eslint: {
     ignoreDuringBuilds: true,
   },
