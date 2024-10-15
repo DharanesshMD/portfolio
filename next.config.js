@@ -18,18 +18,15 @@ const nextConfig = {
         pathname: '**',
       },
     ],
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
-  output: 'export',
-  // Ignore ESLint errors during build (optional, use with caution)
+  // Remove output: 'export' to enable ISR
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Ignore TypeScript errors during build (optional, use with caution)
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Disable server-side rendering for static export
   experimental: {
     appDir: true,
   },

@@ -2,36 +2,48 @@ import { personalData } from "@/utils/data/personal-data";
 
 // Fetch blog data based on the slug
 async function getBlog(slug) {
-  const res = await fetch(`https://dev.to/api/articles/${personalData.devUsername}/${slug}`);
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
+  try {
+    const res = await fetch(`https://dev.to/api/articles/${personalData.devUsername}/${slug}`, { next: { revalidate: 3600 } });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data for slug: ${slug}`);
+    }
+    return res.json();
+  } catch (error) {
+    console.error(`Error fetching blog post: ${slug}`, error);
+    return null;
   }
-
-  return res.json();
 }
 
 // Generate static params for each blog post
 export async function generateStaticParams() {
-  // Fetch all articles to get their slugs
-  const response = await fetch(`https://dev.to/api/articles/${personalData.devUsername}`);
-  const articles = await response.json();
+  try {
+    const response = await fetch(`https://dev.to/api/articles/${personalData.devUsername}`, { next: { revalidate: 3600 } });
+    if (!response.ok) {
+      throw new Error('Failed to fetch articles');
+    }
+    const articles = await response.json();
 
-  // Check if articles is an array
-  if (!Array.isArray(articles)) {
-    console.error('Failed to fetch articles');
+    if (!Array.isArray(articles)) {
+      console.error('Fetched data is not an array');
+      return [];
+    }
+
+    return articles.map((article) => ({
+      slug: article.slug,
+    }));
+  } catch (error) {
+    console.error('Error in generateStaticParams:', error);
     return [];
   }
-
-  // Generate static paths based on article slugs
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
 }
 
 export default async function BlogDetails({ params }) {
   const { slug } = params;
   const blog = await getBlog(slug);
+
+  if (!blog) {
+    return <div>Error loading blog post. Please try again later.</div>;
+  }
 
   return (
     <div>
@@ -41,5 +53,5 @@ export default async function BlogDetails({ params }) {
   );
 }
 
-// Force static generation
-export const dynamic = 'force-static';
+// Use ISR instead of force-static
+export const revalidate = 3600; // Revalidate every hour
