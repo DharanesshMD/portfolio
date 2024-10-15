@@ -15,13 +15,17 @@ async function getBlog(slug) {
 
 // Generate static paths for each blog post
 export async function generateStaticParams() {
-  // Replace this with your actual fetching logic for slugs
   const response = await fetch(`https://dev.to/api/articles/${personalData.devUsername}`);
   const articles = await response.json();
 
+  // Ensure the articles array is valid
+  if (!Array.isArray(articles)) {
+    throw new Error('Failed to fetch articles');
+  }
+
   // Generate static paths based on article slugs
   return articles.map((article) => ({
-    slug: article.slug, // Assuming your article object has a `slug` property
+    params: { slug: article.slug }, // Wrap slug in params
   }));
 }
 
