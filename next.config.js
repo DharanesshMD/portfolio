@@ -21,12 +21,6 @@ const nextConfig = {
     unoptimized: true, // Required for static export
   },
   output: 'export',
-  // Exclude dynamic routes from static export
-  exportPathMap: async function (defaultPathMap) {
-    const pathMap = { ...defaultPathMap };
-    delete pathMap['/blog/[slug]'];
-    return pathMap;
-  },
   // Ignore ESLint errors during build (optional, use with caution)
   eslint: {
     ignoreDuringBuilds: true,
@@ -34,6 +28,10 @@ const nextConfig = {
   // Ignore TypeScript errors during build (optional, use with caution)
   typescript: {
     ignoreBuildErrors: true,
+  },
+  // Disable server-side rendering for static export
+  experimental: {
+    appDir: true,
   },
 };
 

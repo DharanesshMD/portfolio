@@ -11,6 +11,24 @@ async function getBlog(slug) {
   return res.json();
 }
 
+// Generate static params for each blog post
+export async function generateStaticParams() {
+  // Fetch all articles to get their slugs
+  const response = await fetch(`https://dev.to/api/articles/${personalData.devUsername}`);
+  const articles = await response.json();
+
+  // Check if articles is an array
+  if (!Array.isArray(articles)) {
+    console.error('Failed to fetch articles');
+    return [];
+  }
+
+  // Generate static paths based on article slugs
+  return articles.map((article) => ({
+    slug: article.slug,
+  }));
+}
+
 export default async function BlogDetails({ params }) {
   const { slug } = params;
   const blog = await getBlog(slug);
@@ -23,5 +41,5 @@ export default async function BlogDetails({ params }) {
   );
 }
 
-// This ensures Next.js knows this is a dynamic route
-export const dynamicParams = true;
+// Force static generation
+export const dynamic = 'force-static';
