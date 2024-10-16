@@ -6,7 +6,7 @@ export const personalData = {
   email: 'dharanessh.md@gmail.com',
   phone: '+91 9943082281',
   address: 'Bengaluru, Karnataka, India ',
-  github: 'https://github.com/Dharanessh',
+  github: 'https://github.com/DharanesshMD',
   facebook: '',
   linkedIn: 'https://www.linkedin.com/in/dharanessh-md/',
   twitter: '',
