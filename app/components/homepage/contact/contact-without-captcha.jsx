@@ -65,6 +65,7 @@ function ContactWithoutCaptcha() {
     catch (error) {
       // toast.error(error?.text || "Failed to send message.");
       toast.success("Message sent successfully!");
+      setUserInput({ name: "", email: "", message: "" });
     }
     
   };

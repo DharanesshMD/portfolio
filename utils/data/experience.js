@@ -7,9 +7,9 @@ export const experiences = [
   },
   {
     id: 2,
-    title: "UX Designer",
+    title: "UI Developer",
     company: "21K School",
-    duration: "(Jun 2022 - Mar 2023)"
+    duration: "(Jun 2022 - Sep 2023)"
   },
   {
     id: 3,
